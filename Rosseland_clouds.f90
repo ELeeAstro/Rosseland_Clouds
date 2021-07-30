@@ -1,8 +1,9 @@
 program Rosseland_clouds
+  use, intrinsic :: iso_fortran_env
   use mie_routines
   implicit none
 
-  integer, parameter :: dp = kind(1.0d0)
+  integer, parameter :: dp = REAL64
 
   real(dp), parameter :: pi = 4.0_dp * atan(1.0_dp)
   real(dp), parameter :: twopi = 2.0_dp * pi
@@ -29,7 +30,7 @@ program Rosseland_clouds
   ! Species name - 'MgSiO3_2' is Xianyu's MgSiO3 data
   !! Change to the species name here and recompile
   !! will auto read in the nk constants in the nk directory
-  sp = 'MgSiO3_2'
+  sp = 'MgSiO3'
 
   ! Read in temperature and grain size grid
   open(newunit=uin, file='rosselandMean_RTtable.txt',action='read')
@@ -56,13 +57,13 @@ program Rosseland_clouds
   read(unk,*) nlines, c_flag
   allocate(wl_ori(nlines),n_ori(nlines),k_ori(nlines))
   read(unk,*) ; read(unk,*); read(unk,*); read(unk,*)
-  !do n = 1, nlines
-  do n = nlines, 1, -1 !'MgSiO3_2' - comment in
-    read(unk,*) wl_ori(n),n_ori(n),k_ori(n)
-    wl_ori(n) = 1.0_dp/wl_ori(n) * 1e4 ! 'MgSiO3_2' - comment in
+  do n = 1, nlines
+  !do n = nlines, 1, -1 !'MgSiO3_2' - comment in/out
+   read(unk,*) wl_ori(n),n_ori(n),k_ori(n)
+    !wl_ori(n) = 1.0_dp/wl_ori(n) * 1e4 ! 'MgSiO3_2' - comment in/out
     n_ori(n) = max(0.0_dp,n_ori(n))
     k_ori(n) = max(0.0_dp,k_ori(n))
-    !print*,  n, wl_ori(n),n_ori(n),k_ori(n)
+    print*,  n, wl_ori(n),n_ori(n),k_ori(n)
   end do
 
 
@@ -79,12 +80,16 @@ program Rosseland_clouds
     do t = 1, nt
       do l = 1, nwl
 
+        ! Real and complex n,k constants
         ri = cmplx(n_int(l),k_int(l),dp)
+        ! Size parameter
         x = (twopi * rad(r) * 1.0e6_dp)/wl(l)
 
+        ! Mie theory solver
         call shexqnn2(ri, x, rQext, rQsca, rQabs, rQbk, rQpr, ralbedo, rg, &
                      & rier, rSA1, rSA2, rdoSA, rnang)
 
+        ! Save results to arrays
         Qext_l(l) = rQext
         Qsca_l(l) = rQsca
         gg_l(l) = max(rg,1.0e-12_dp)
@@ -93,10 +98,11 @@ program Rosseland_clouds
         !print*, rad(r), wl(l), rQext, rQsca, rg
 
       end do
+
+      ! Rosseland mean weighting calculation (1 = trapezium rule, 2 = simple sum rule)
       call Ross_mean(nwl, wl(:),temp(t),Qext_l(:),Ross_Qext(r,t),1)
       call Ross_mean(nwl, wl(:),temp(t),Qsca_l(:),Ross_Qsca(r,t),1)
       call Ross_mean(nwl, wl(:),temp(t),gg_l(:),Ross_gg(r,t),1)
-      !call Ross_mean(nwl, wl(:),temp(t),gg_l(:),Ross_gg(r,t),2)
     end do
   end do
 
@@ -195,9 +201,10 @@ end subroutine interp_nk
 
 
 subroutine Ross_mean(nwl, wl, temp, Vl, Vr, idx)
+  use, intrinsic :: iso_fortran_env
   implicit none
 
-  integer, parameter :: dp = kind(1.0d0)
+  integer, parameter :: dp = REAL64
   real(kind=dp), parameter :: hp = 6.62607015e-27_dp ! erg s - Planck's constant
   real(kind=dp), parameter :: c_s = 2.99792458e10_dp ! cm s^-1 - Vacuum speed of light
   real(kind=dp), parameter :: kb = 1.380649e-16_dp ! erg K^-1 - Boltzmann's constant

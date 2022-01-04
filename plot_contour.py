@@ -3,16 +3,24 @@ import matplotlib.pylab as plt
 
 
 ## Species names to plot ##
-sp = 'MgSiO3_2'
+sp = 'MgSiO3'
 ## ----- ##
 
 nt = 51
 nr = 51
 
-data = np.loadtxt('rosselandMean_RTtable.txt',skiprows=1)
-rad = data[0,:]
-temp = data[1,:]
+fname = 'rosselandMean_RTtable.txt'
+f = open(fname,'r')
+dim = f.readline().split()
+rad = np.array(f.readline().split())
+rad = rad.astype(np.float) 
+temp = np.array(f.readline().split())
+temp = temp.astype(np.float)
 
+#data = np.loadtxt('rosselandMean_RTtable_2.txt',skiprows=1)
+#rad = data[0,:]
+#temp = data[1,:]
+print(dim)
 print(rad)
 print(temp)
 

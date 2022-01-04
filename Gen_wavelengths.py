@@ -1,7 +1,7 @@
 import numpy as np
 
 nwl = 10000
-wl = np.logspace(np.log10(0.1),np.log10(1000),nwl)
+wl = np.logspace(np.log10(0.3),np.log10(1000),nwl)
 
 
 output_name = 'wavelengths.txt'

@@ -29,7 +29,7 @@ program Rosseland_clouds
   ! Species name - 'MgSiO3_2' is Xianyu's MgSiO3 data
   !! Change to the species name here and recompile
   !! will auto read in the nk constants in the nk directory
-  sp = 'MgSiO3_2'
+  sp = 'MgSiO3'
 
   ! Read in temperature and grain size grid
   open(newunit=uin, file='rosselandMean_RTtable.txt',action='read')
@@ -56,10 +56,10 @@ program Rosseland_clouds
   read(unk,*) nlines, c_flag
   allocate(wl_ori(nlines),n_ori(nlines),k_ori(nlines))
   read(unk,*) ; read(unk,*); read(unk,*); read(unk,*)
-  !do n = 1, nlines
-  do n = nlines, 1, -1 !'MgSiO3_2' - comment in
-    read(unk,*) wl_ori(n),n_ori(n),k_ori(n)
-    wl_ori(n) = 1.0_dp/wl_ori(n) * 1e4 ! 'MgSiO3_2' - comment in
+  do n = 1, nlines
+  !do n = nlines, 1, -1 !'MgSiO3_2' - comment in/out
+   read(unk,*) wl_ori(n),n_ori(n),k_ori(n)
+    !wl_ori(n) = 1.0_dp/wl_ori(n) * 1e4 ! 'MgSiO3_2' - comment in/out
     n_ori(n) = max(0.0_dp,n_ori(n))
     k_ori(n) = max(0.0_dp,k_ori(n))
     !print*,  n, wl_ori(n),n_ori(n),k_ori(n)
@@ -221,7 +221,7 @@ subroutine Ross_mean(nwl, wl, temp, Vl, Vr, idx)
     wl_cm(l) = wl(l) * 1e-4_dp
     x = (hp * c_s) / (wl_cm(l) * kb * temp)
     top = 2.0_dp * hp**2 * c_s**3 * exp(x)
-    bot = wl_cm(l)**6 * kb * temp**2 * (exp(x - 1.0_dp))**2
+    bot = wl_cm(l)**6 * kb * temp**2 * (exp(x) - 1.0_dp)**2
     dBdT(l) = top/bot
 
     Vw = Vw + 1.0_dp/Vl(l) * dBdT(l)

@@ -1,8 +1,9 @@
 program Rosseland_clouds
   use mie_routines
+  use, intrinsic :: iso_fortran_env
   implicit none
 
-  integer, parameter :: dp = kind(1.0d0)
+  integer, parameter :: dp = REAL64
 
   real(dp), parameter :: pi = 4.0_dp * atan(1.0_dp)
   real(dp), parameter :: twopi = 2.0_dp * pi
@@ -29,17 +30,19 @@ program Rosseland_clouds
   ! Species name - 'MgSiO3_2' is Xianyu's MgSiO3 data
   !! Change to the species name here and recompile
   !! will auto read in the nk constants in the nk directory
-  sp = 'MgSiO3'
+  sp = 'H2O'
 
   ! Read in temperature and grain size grid
-  open(newunit=uin, file='rosselandMean_RTtable.txt',action='read')
+  open(newunit=uin, file='rosselandMean_RTtable_2.txt',action='read')
   read(uin,*) nr, nt
   allocate(temp(nt),rad(nr))
   read(uin,*) (rad(r),r=1,nr)
   read(uin,*) (temp(t),t=1,nt)
 
-  !print*, rad(:)
-  !print*, temp(:)
+  print*, rad(:)
+  print*, temp(:)
+
+  print*, nr, nt
 
   ! Read in wavelength grid
   open(newunit=uwl, file='wavelengths.txt',action='read')
@@ -108,18 +111,21 @@ program Rosseland_clouds
   write(uQext,*) nr, nt
   do r = 1, nr
     write(uQext,*) (real(Ross_Qext(r,t)), t = 1, nt)
+    call flush(uQext)
   end do
 
   open(newunit=uQsca, file='results/'//trim(sp)//'_rosselandMean_qscat.txt',action='readwrite')
   write(uQsca,*) nr, nt
   do r = 1, nr
     write(uQsca,*) (real(Ross_Qsca(r,t)), t = 1, nt)
+    call flush(uQsca)
   end do
 
   open(newunit=ugg, file='results/'//trim(sp)//'_rosselandMean_gg.txt',action='readwrite')
   write(ugg,*) nr, nt
   do r = 1, nr
     write(ugg,*) (real(Ross_gg(r,t)), t = 1, nt)
+    call flush(ugg)
   end do
 
 
@@ -195,9 +201,10 @@ end subroutine interp_nk
 
 
 subroutine Ross_mean(nwl, wl, temp, Vl, Vr, idx)
+  use, intrinsic :: iso_fortran_env
   implicit none
 
-  integer, parameter :: dp = kind(1.0d0)
+  integer, parameter :: dp = REAL64
   real(kind=dp), parameter :: hp = 6.62607015e-27_dp ! erg s - Planck's constant
   real(kind=dp), parameter :: c_s = 2.99792458e10_dp ! cm s^-1 - Vacuum speed of light
   real(kind=dp), parameter :: kb = 1.380649e-16_dp ! erg K^-1 - Boltzmann's constant

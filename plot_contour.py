@@ -3,13 +3,13 @@ import matplotlib.pylab as plt
 
 
 ## Species names to plot ##
-sp = 'MgSiO3'
+sp = 'H2O'
 ## ----- ##
 
-nt = 51
+nt = 22
 nr = 51
 
-fname = 'rosselandMean_RTtable.txt'
+fname = 'rosselandMean_RTtable_2.txt'
 f = open(fname,'r')
 dim = f.readline().split()
 rad = np.array(f.readline().split())
@@ -21,12 +21,14 @@ temp = temp.astype(np.float)
 #rad = data[0,:]
 #temp = data[1,:]
 print(dim)
-print(rad)
-print(temp)
+print(len(rad),rad)
+print(len(temp),temp)
 
 Qext = np.loadtxt('results/'+sp+'_rosselandMean_qext.txt',skiprows=1)
 Qsca = np.loadtxt('results/'+sp+'_rosselandMean_qscat.txt',skiprows=1)
 gg = np.loadtxt('results/'+sp+'_rosselandMean_gg.txt',skiprows=1)
+
+print(Qext.shape)
 
 Qext_lev = np.linspace(0,np.max(Qext),10)
 Qsca_lev = np.linspace(0,np.max(Qsca),10)

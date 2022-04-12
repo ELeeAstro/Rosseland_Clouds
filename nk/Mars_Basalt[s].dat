@@ -1,5 +1,8 @@
-450
-1
+450 .False. # Number of lines, conductive flag
+# 5 line header for n-k original data
+# Mars Basalt - Wolff et al. 2006
+# Taken from: NEMESIS database 
+# wl(um)      n                k
         0.200000         1.484789         0.010049
         0.300000         1.490672         0.011391
         0.400000         1.495347         0.012606

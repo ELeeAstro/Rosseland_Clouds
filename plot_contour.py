@@ -3,13 +3,13 @@ import matplotlib.pylab as plt
 
 
 ## Species names to plot ##
-sp = 'MgSiO3'
+sp = 'H2O'
 ## ----- ##
 
-nt = 51
+nt = 49
 nr = 51
 
-fname = 'rosselandMean_RTtable.txt'
+fname = 'rosselandMean_RTtable_3.txt'
 f = open(fname,'r')
 dim = f.readline().split()
 rad = np.array(f.readline().split())

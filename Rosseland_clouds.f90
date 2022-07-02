@@ -30,10 +30,10 @@ program Rosseland_clouds
   ! Species name - 'MgSiO3_2' is Xianyu's MgSiO3 data
   !! Change to the species name here and recompile
   !! will auto read in the nk constants in the nk directory
-  sp = 'MgSiO3'
+  sp = 'H2O'
 
   ! Read in temperature and grain size grid
-  open(newunit=uin, file='rosselandMean_RTtable.txt',action='read')
+  open(newunit=uin, file='rosselandMean_RTtable_3.txt',action='read')
   read(uin,*) nr, nt
   allocate(temp(nt),rad(nr))
   read(uin,*) (rad(r),r=1,nr)

@@ -32,7 +32,7 @@ LFLAGS    = $(FFLAGS)
 
 
 OBJECTS = \
-MIEX.o \
+lxmie_mod.o \
 Rosseland_clouds.o
 
 # executable statement
@@ -46,9 +46,6 @@ Ross: $(OBJECTS)
 	$(F90LINKER) $(LFLAGS) $(OBJECTS) -o $(EXECS)
 
 clean:
-	rm -f *.o *.mod
-
-realclean:
 	rm -f *.o *.mod *~ *__genmod.f90 $(EXECS)
 
 .f90.o:

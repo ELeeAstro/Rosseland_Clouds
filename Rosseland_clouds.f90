@@ -1,6 +1,6 @@
 program Rosseland_clouds
-  use mie_routines
   use, intrinsic :: iso_fortran_env
+  use lxmie_mod, only : lxmie
   implicit none
 
   integer, parameter :: dp = REAL64
@@ -20,20 +20,16 @@ program Rosseland_clouds
   real(dp), dimension(:), allocatable :: Qext_l, Qsca_l, gg_l
   real(dp), dimension(:, :), allocatable :: Ross_Qext, Ross_Qsca, Ross_gg
 
-  integer, parameter :: rnang = 1
-  integer :: rier
   complex(dp) :: ri
-  real(dp) :: x, rQext, rQsca, rQabs, rQbk, rQpr, ralbedo, rg
-  complex(dp), dimension(rnang) :: rSA1, rSA2
-  logical, parameter :: rdoSA = .False.
+  real(dp) :: x, q_ext, q_sca, q_abs, g
 
   ! Species name - 'MgSiO3_2' is Xianyu's MgSiO3 data
   !! Change to the species name here and recompile
   !! will auto read in the nk constants in the nk directory
-  sp = 'H2O'
+  sp = 'Mg2SiO4_amorph'
 
-  ! Read in temperature and grain size grid
-  open(newunit=uin, file='rosselandMean_RTtable_3.txt',action='read')
+  ! Read in temperature and grain size grid - NOTE: different ones depending on T and a grid
+  open(newunit=uin, file='rosselandMean_RTtable.txt',action='read')
   read(uin,*) nr, nt
   allocate(temp(nt),rad(nr))
   read(uin,*) (rad(r),r=1,nr)
@@ -82,15 +78,14 @@ program Rosseland_clouds
     do t = 1, nt
       do l = 1, nwl
 
-        ri = cmplx(n_int(l),k_int(l),dp)
+        ri = cmplx(n_int(l),-k_int(l),dp)
         x = (twopi * rad(r) * 1.0e6_dp)/wl(l)
 
-        call shexqnn2(ri, x, rQext, rQsca, rQabs, rQbk, rQpr, ralbedo, rg, &
-                     & rier, rSA1, rSA2, rdoSA, rnang)
+        call lxmie(ri, x, q_ext, q_sca, q_abs, g)
 
-        Qext_l(l) = rQext
-        Qsca_l(l) = rQsca
-        gg_l(l) = max(rg,1.0e-12_dp)
+        Qext_l(l) = q_ext
+        Qsca_l(l) = q_sca
+        gg_l(l) = max(g,1.0e-12_dp)
         gg_l(l) = min(gg_l(l), 1.0_dp)
 
         !print*, rad(r), wl(l), rQext, rQsca, rg

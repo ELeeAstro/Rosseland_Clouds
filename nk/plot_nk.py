@@ -27,7 +27,5 @@ plt.legend()
 plt.xscale('log')
 plt.yscale('log')
 
-plt.xlabel('um')
-
 plt.show()
 

@@ -6,27 +6,21 @@ import matplotlib.pylab as plt
 sp = 'Mg2SiO4_amorph'
 ## ----- ##
 
-nt = 51
-nr = 51
-
-fname = 'rosselandMean_RTtable.txt'
+fname = 'RTtable.txt'
 f = open(fname,'r')
 dim = f.readline().split()
 rad = np.array(f.readline().split())
-rad = rad.astype(np.float) 
+rad = rad.astype(float)
 temp = np.array(f.readline().split())
-temp = temp.astype(np.float)
+temp = temp.astype(float)
 
-#data = np.loadtxt('rosselandMean_RTtable_2.txt',skiprows=1)
-#rad = data[0,:]
-#temp = data[1,:]
 print(dim)
 print(len(rad),rad)
 print(len(temp),temp)
 
-Qext = np.loadtxt('results/'+sp+'_rosselandMean_qext.txt',skiprows=1)
-Qsca = np.loadtxt('results/'+sp+'_rosselandMean_qscat.txt',skiprows=1)
-gg = np.loadtxt('results/'+sp+'_rosselandMean_gg.txt',skiprows=1)
+Qext = np.loadtxt('results_Ross/'+sp+'_rosselandMean_qext.txt',skiprows=1)
+Qsca = np.loadtxt('results_Ross/'+sp+'_rosselandMean_qscat.txt',skiprows=1)
+gg = np.loadtxt('results_Ross/'+sp+'_rosselandMean_gg.txt',skiprows=1)
 
 print(Qext.shape)
 
@@ -41,10 +35,10 @@ con_Qext = plt.contourf(temp,rad,Qext,Qext_lev)
 plt.colorbar(con_Qext,label='Q$_{ext}$')
 plt.yscale('log')
 
-plt.ylabel('radius [m]')
+plt.ylabel('radius [um]')
 plt.xlabel('temperature [K]')
 
-plt.savefig('plots/'+sp+'_Qext.png',dpi=144,bbox_inches='tight')
+plt.savefig('plots_Ross/'+sp+'_Qext.png',dpi=144,bbox_inches='tight')
 
 
 fig = plt.figure()
@@ -53,10 +47,10 @@ con_Qsca = plt.contourf(temp,rad,Qsca,Qsca_lev)
 plt.colorbar(con_Qsca,label='Q$_{sca}$')
 plt.yscale('log')
 
-plt.ylabel('radius [m]')
+plt.ylabel('radius [um]')
 plt.xlabel('temperature [K]')
 
-plt.savefig('plots/'+sp+'_Qsca.png',dpi=144,bbox_inches='tight')
+plt.savefig('plots_Ross/'+sp+'_Qsca.png',dpi=144,bbox_inches='tight')
 
 fig = plt.figure()
 
@@ -64,9 +58,9 @@ con_gg = plt.contourf(temp,rad,gg,gg_lev)
 plt.colorbar(con_gg,label='g')
 plt.yscale('log')
 
-plt.ylabel('radius [m]')
+plt.ylabel('radius [um]')
 plt.xlabel('temperature [K]')
 
-plt.savefig('plots/'+sp+'_g.png',dpi=144,bbox_inches='tight')
+plt.savefig('plots_Ross/'+sp+'_g.png',dpi=144,bbox_inches='tight')
 
 plt.show()

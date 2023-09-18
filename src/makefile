@@ -33,16 +33,19 @@ LFLAGS    = $(FFLAGS)
 
 OBJECTS = \
 lxmie_mod.o \
-Rosseland_clouds.o
+interp_nk.o \
+Rosseland_clouds.o \
+lognorm_clouds.o \
+main_select.o
 
 # executable statement
-EXECS  = Ross
+EXECS  = ../cldtables
 
 .SUFFIXES : .o .f90 .f
 
-default: Ross
+default: cldtables
 
-Ross: $(OBJECTS)
+cldtables: $(OBJECTS)
 	$(F90LINKER) $(LFLAGS) $(OBJECTS) -o $(EXECS)
 
 clean:

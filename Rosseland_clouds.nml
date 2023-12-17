@@ -1,0 +1,29 @@
+&Rosseland_clouds_nml
+
+  ! Method integer
+  ! 1 = Rosseland mean with single particle sizes
+  ! 2 = Rosseland mean with lognormal size distributions
+  ! 3 = Rosseland mean with lognormal reff sizes (similar to single sizes)
+  ! 4 = Spectral with single particle sizes at lognormal effective size
+  meth = 1
+
+  ! Wavelength file path
+  wl_path = 'wavelengths.txt'
+
+  ! Species name
+  sp = 'MgSiO3_amorph'
+
+  ! Path to nk data
+  nk_path = 'nk/MgSiO3_amorph[s].dat'
+
+  ! Rosseland mean radius-temperature table
+  RT_path = 'RTtable.txt'
+
+  ! lognormal distribution properties
+  r_med = 1.0
+  sigma = 2.0
+  rmin = 1e-3
+  rmax = 20.0
+
+  iint = 20
+/

@@ -5,11 +5,11 @@ F90 = gfortran
 F90LINKER =  gfortran
 
 #Debugging and development flags
-#FFLAGS	= -Og -g -pipe -Wall -Wextra -fbacktrace -fcheck=all -ffpe-trap=invalid,zero,overflow
+FFLAGS	= -Og -g -pipe -Wall -Wextra -fbacktrace -fcheck=all -ffpe-trap=invalid,zero,overflow
 #FFLAGS	= -Og -pipe -Wall -Wextra -g -fbacktrace
 
 #Serial flags
-FFLAGS  = -O3 -pipe
+#FFLAGS  = -O3 -pipe
 
 #Parallel flags
 #FFLAGS	= -O3 -pipe -fopenmp
@@ -33,19 +33,20 @@ LFLAGS    = $(FFLAGS)
 
 OBJECTS = \
 lxmie_mod.o \
-interp_nk.o \
-Rosseland_clouds.o \
-lognorm_clouds.o \
-main_select.o
+Rosseland_data_mod.o \
+Rosseland_single.o \
+Rosseland_reff.o \
+Spectral_reff.o \
+Rosseland_main.o
 
 # executable statement
-EXECS  = ../cldtables
+EXECS  = ../Rosseland_clouds
 
 .SUFFIXES : .o .f90 .f
 
-default: cldtables
+default: Rosseland_clouds
 
-cldtables: $(OBJECTS)
+Rosseland_clouds: $(OBJECTS)
 	$(F90LINKER) $(LFLAGS) $(OBJECTS) -o $(EXECS)
 
 clean:

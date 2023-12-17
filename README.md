@@ -33,7 +33,7 @@
 
  ## Output
 
- Output is generated into specific results_* directories for your method and species. We in
+ Output is generated into specific results_* directories for your method and species. We include example plotting routines (which needs to edited to plot each species).
 
  ## Example use in GCMs
 

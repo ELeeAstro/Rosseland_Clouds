@@ -28,7 +28,7 @@ plt.yscale('log')
 plt.ylabel(r'k$_{\rm ext}$ [cm$^{2}$]')
 plt.xlabel(r'wavelength [$\mu$m]')
 
-plt.title(str(r_med) + ' ' + str(sigma))
+plt.title('r_med: ' + str(r_med) + ' ' + 'sigma: ' + str(sigma))
 
 plt.savefig(sp+'_kext.png',dpi=144,bbox_inches='tight')
 
@@ -38,7 +38,7 @@ fig = plt.figure()
 plt.plot(wl,a)
 plt.xscale('log')
 
-plt.title(str(r_med) + ' ' + str(sigma))
+plt.title('r_med: ' + str(r_med) + ' ' + 'sigma: ' + str(sigma))
 
 plt.ylabel(r'$\omega$ [-]')
 plt.xlabel(r'wavelength [$\mu$m]')
@@ -50,7 +50,7 @@ fig = plt.figure()
 plt.plot(wl,g)
 plt.xscale('log')
 
-plt.title(str(r_med) + ' ' + str(sigma))
+plt.title('r_med: ' + str(r_med) + ' ' + 'sigma: ' + str(sigma))
 
 plt.ylabel(r'$g$')
 plt.xlabel(r'wavelength [$\mu$m]')

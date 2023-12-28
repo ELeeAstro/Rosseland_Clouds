@@ -5,7 +5,7 @@
   ! 2 = Rosseland mean with lognormal size distributions
   ! 3 = Rosseland mean with lognormal reff sizes (similar to single sizes)
   ! 4 = Spectral with single particle sizes at lognormal effective size
-  meth = 1
+  meth = 2
 
   ! Wavelength file path
   wl_path = 'wavelengths.txt'
@@ -20,6 +20,7 @@
   RT_path = 'RTtable.txt'
 
   ! lognormal distribution properties
+  N0 = 1.0     ! Typically = 1 for normalised tables
   r_med = 1.0
   sigma = 2.0
   rmin = 1e-3

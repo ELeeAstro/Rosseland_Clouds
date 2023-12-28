@@ -47,9 +47,8 @@ subroutine Rosseland_reff(sp, sigma)
         call lxmie(ri, x, q_ext, q_sca, q_abs, g)
 
         kext_l(l) = xsec * q_ext
-        a_l(l) = q_sca/q_ext
-        g_l(l) = max(g,1.0e-12_dp)
-        g_l(l) = min(g_l(l), 1.0_dp)
+        a_l(l) = xsec * q_sca
+        g_l(l) = max(g,1.0e-12_dp) * xsec * q_sca
 
         !print*, a(aa), wl(l), x, q_ext, q_sca, g
 
@@ -58,6 +57,14 @@ subroutine Rosseland_reff(sp, sigma)
       call Ross_mean(nwl, wl(:), T(tt), kext_l(:), Ross_kext(aa,tt))
       call Ross_mean(nwl, wl(:), T(tt), a_l(:), Ross_a(aa,tt))
       call Ross_mean(nwl, wl(:), T(tt), g_l(:), Ross_g(aa,tt))
+
+      !! Now calculate ssa and g
+
+      ! g is scattering opacity weighted by g divided by scattering opacity
+      Ross_g(aa,tt) = Ross_g(aa,tt)/Ross_a(aa,tt)
+
+      ! ssa is scattering opacity divided by extinction opacity
+      Ross_a(aa,tt) = Ross_a(aa,tt)/Ross_kext(aa,tt)
 
     end do
   end do
@@ -79,7 +86,7 @@ subroutine Rosseland_reff(sp, sigma)
   close(u_k)
 
   open(newunit=u_a, file='results_Rosseland_reff/'//trim(sp)//'_a.txt',action='readwrite')
-  write(u_a,*) na, nt, sigma
+  write(u_a,*) na, nT, sigma
   write(u_a,*) a(:)
   write(u_a,*) reff(:)
   write(u_a,*) T(:)
@@ -91,7 +98,7 @@ subroutine Rosseland_reff(sp, sigma)
   close(u_a)
 
   open(newunit=u_g, file='results_Rosseland_reff/'//trim(sp)//'_g.txt',action='readwrite')
-  write(u_g,*) na, nt, sigma
+  write(u_g,*) na, nT, sigma
   write(u_g,*) a(:)
   write(u_g,*) reff(:)
   write(u_g,*) T(:)

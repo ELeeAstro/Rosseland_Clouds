@@ -20,10 +20,13 @@
 
  ### 2. Rosseland mean with lognormal size distribution
 
+ This takes the particle size array in RTtable as the median particle size of a log-normal distribution, it then calculates the log-normal weighted (normalised typically, so N0 = 1) wavelength dependent values (integrating for iint values between rmin and rmax). 
+ Then the Rosseland mean values are calculated across each wavelength.
+
  ### 3. Rosseland mean with lognormal reff size (similar to single sizes)
 
-  This takes the particle size array in RTtable as the median particle size of a log-normal distribution, then calculates the effective particle size given the sigma value in the namelist.
-  Then it calculates the Rosseland mean normalised opacity, single scattering albedo and asymmetry factor similar to the single particle size case.
+ This takes the particle size array in RTtable as the median particle size of a log-normal distribution, then calculates the effective particle size given the sigma value in the namelist.
+ Then it calculates the Rosseland mean normalised opacity, single scattering albedo and asymmetry factor similar to the single particle size case.
 
  ### 4. Spectral with single particle sizes at lognormal effective size
 
@@ -33,11 +36,11 @@
 
  ## Output
 
- Output is generated into specific results_* directories for your method and species. We include example plotting routines (which needs to edited to plot each species).
+ Output is generated into specific results_* directories for your method and species. We include example plotting routines (which needs to edited to plot each specific species).
 
  ## Example use in GCMs
 
- One question to ask is, how do I actually use this data inside the GCM or RT code I have?
+ One question to ask is, how do I actually use this data inside the GCM or RT code I have? [TO DO]
 
  ## Useful stuff
 

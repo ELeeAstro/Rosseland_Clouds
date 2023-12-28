@@ -30,7 +30,7 @@ contains
     real(dp), intent(out) :: Vr
 
     integer :: l
-    real(dp) :: top, bot,  xx
+    real(dp) :: top, bot,  xx, expx
     real(dp), dimension(nwl) :: dBdT, wl_cm
 
     !! Subroutine calculates Rosseland mean weighted value
@@ -40,8 +40,10 @@ contains
 
       wl_cm(l) = wl(l) * 1e-4_dp
       xx = (hp * c_s) / (wl_cm(l) * kb * temp)
-      top = 2.0_dp * hp**2 * c_s**3 * exp(xx)
-      bot = wl_cm(l)**6 * kb * temp**2 * (exp(xx) - 1.0_dp)**2
+      xx = min(xx, 35.0_dp) ! Avoid overfloating
+      expx = exp(xx)
+      top = 2.0_dp * hp**2 * c_s**3 * expx
+      bot = wl_cm(l)**6 * kb * temp**2 * (expx - 1.0_dp)**2
       dBdT(l) = top/bot
       
     end do

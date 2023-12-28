@@ -6,13 +6,13 @@ program Rosseland_main
   character(len=100) :: wl_path, sp, nk_path, RT_path
 
   integer :: iint
-  real(dp) :: r_med, sigma, rmin, rmax
+  real(dp) :: N0, r_med, sigma, rmin, rmax
 
   integer :: u_nml
 
   namelist /Rosseland_clouds_nml/ &
     & meth, wl_path, sp, nk_path, RT_path, &
-    & r_med, sigma, rmin, rmax, iint
+    & N0, r_med, sigma, rmin, rmax, iint
 
 
   !! Read input variables from main namelist
@@ -33,7 +33,7 @@ program Rosseland_main
   case(1)
     call Rosseland_single(sp)
   case(2)
-    !call Rosseland_lognorm()
+    call Rosseland_lognorm(sp, N0, sigma, rmin, rmax, iint)
   case(3)
     call Rosseland_reff(sp, sigma) 
   case(4)

@@ -1,7 +1,7 @@
 import numpy as np
 
 # Number of wavelengths
-nwl = 10000
+nwl = 1000
 
 # min and max wavelengths [um]
 wlmin = 0.2

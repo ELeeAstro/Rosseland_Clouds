@@ -3,6 +3,11 @@
 
  Warning: This code is under active development and undergoing a refresh of an older code for easier use. The README is not complete!
 
+ ## Theory guide
+
+ An overleaf (in progess) [theory guide](https://www.overleaf.com/read/mggfpbbmpqpk#2fbd7d).
+ This details what is actually going on in the code, and the theory behind the calculations etc.
+
  ## How to use
 
  The Gen_input.py file will generate the input files wavelengths.txt and RTtable.txt - the wavelengths, radii and temperatures of the calculations are contained here.
@@ -18,19 +23,31 @@
 
  This takes the particle size array in RTtable as a single particle size (delta function), and calculates the Rosseland mean normalised opacity, single scattering albedo and asymmetry factor.
 
- ### 2. Rosseland mean with lognormal size distribution
+ ### 2. Rosseland mean with log-normal size distribution
 
  This takes the particle size array in RTtable as the median particle size of a log-normal distribution, it then calculates the log-normal weighted (normalised typically, so N0 = 1) wavelength dependent values (integrating for iint values between rmin and rmax). 
  Then the Rosseland mean values are calculated across each wavelength.
 
- ### 3. Rosseland mean with lognormal reff size (similar to single sizes)
+ ### 3. Rosseland mean with log-normal reff size (similar to single sizes)
 
  This takes the particle size array in RTtable as the median particle size of a log-normal distribution, then calculates the effective particle size given the sigma value in the namelist.
  Then it calculates the Rosseland mean normalised opacity, single scattering albedo and asymmetry factor similar to the single particle size case.
 
- ### 4. Spectral with single particle sizes at lognormal effective size
+ ### 4. Spectral with single particle size
 
- This takes the particle size array and wavelength array and calculates the effective particle size of the log-normal parameters.
+ This takes the median particle size as a constant size.
+ It then calculates the normalised kext, a and g at those specific wavelengths at the effective particle size. 
+ This mode is useful for building tables for spectral RT models in the GCM.
+
+ ### 5. Spectral with log-normal distribution, at r_med with sigma
+
+ This takes the namelist median particle size, sigma, rmin, rmax and iint, and calculates the normalised integrated log-normal values.
+ It then calculates the normalised kext, a and g at those specific wavelengths for the given log-normal distribution 
+ This mode is useful for building tables for spectral RT models in the GCM.
+
+ ### 6. Spectral with single particle size, given by the r_eff of the log-normal parameters
+
+ This takes the effective particle size of the log-normal parameters as a single particle size.
  It then calculates the normalised kext, a and g at those specific wavelengths at the effective particle size. 
  This mode is useful for building tables for spectral RT models in the GCM.
 

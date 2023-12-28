@@ -53,9 +53,7 @@ subroutine Rosseland_lognorm(sp, N0, sigma, rmin, rmax, iint)
           nd_r(i) = N0/(r_r(i)*1e-4_dp*sqrt(2.0_dp*pi)*log(sigma)) *  &
             & exp(-(log(r_r(i)/(a(aa)))**2)/(2.0_dp*log(sigma)**2))
 
-          if (nd_r(i) < 1e-30_dp) then
-            nd_r(i) = 1e-30_dp
-          end if
+          nd_r(i) = max(nd_r(i), 1e-30_dp)
 
           xsec = pi * (r_r(i)* 1e-4_dp)**2
 

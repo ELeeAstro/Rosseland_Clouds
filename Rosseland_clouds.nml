@@ -1,11 +1,13 @@
 &Rosseland_clouds_nml
 
   ! Method integer
-  ! 1 = Rosseland mean with single particle sizes
+  ! 1 = Rosseland mean with single particle size
   ! 2 = Rosseland mean with lognormal size distributions
-  ! 3 = Rosseland mean with lognormal reff sizes (similar to single sizes)
-  ! 4 = Spectral with single particle sizes at lognormal effective size
-  meth = 2
+  ! 3 = Rosseland mean with lognormal reff size (similar to single size)
+  ! 4 = Spectral with single particle size
+  ! 5 = Spectral with lognormal size distributions
+  ! 6 = Spectral with lognormal reff size (similar to single size)
+  meth = 5
 
   ! Wavelength file path
   wl_path = 'wavelengths.txt'
@@ -24,7 +26,7 @@
   r_med = 1.0
   sigma = 2.0
   rmin = 1e-3
-  rmax = 20.0
+  rmax = 100.0
 
-  iint = 20
+  iint = 101
 /

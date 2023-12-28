@@ -37,6 +37,10 @@ program Rosseland_main
   case(3)
     call Rosseland_reff(sp, sigma) 
   case(4)
+    call Spectral_single(sp, r_med)
+  case(5)
+    call Spectral_lognorm(sp, N0, r_med, sigma, rmin, rmax, iint)       
+  case(6)
     call Spectral_reff(sp, r_med, sigma)
   case default
     print*, 'Invalid method integer selected', meth

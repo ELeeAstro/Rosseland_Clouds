@@ -44,6 +44,7 @@ for i in range(na):
 
 # Calculate specific nd for calculated a values
 nd_mode = N0/(r_mode*1e-4*np.sqrt(2.0*np.pi)*np.log(sig)) * np.exp(-(np.log(r_mode/r_med)**2)/(2.0*np.log(sig)**2))
+nd_med = N0/(r_med*1e-4*np.sqrt(2.0*np.pi)*np.log(sig)) * np.exp(-(np.log(r_med/r_med)**2)/(2.0*np.log(sig)**2))
 nd_mean = N0/(r_mean*1e-4*np.sqrt(2.0*np.pi)*np.log(sig)) * np.exp(-(np.log(r_mean/r_med)**2)/(2.0*np.log(sig)**2))
 nd_eff = N0/(r_eff*1e-4*np.sqrt(2.0*np.pi)*np.log(sig)) * np.exp(-(np.log(r_eff/r_med)**2)/(2.0*np.log(sig)**2))
 nd_v = N0/(r_v*1e-4*np.sqrt(2.0*np.pi)*np.log(sig)) * np.exp(-(np.log(r_v/r_med)**2)/(2.0*np.log(sig)**2))
@@ -51,11 +52,12 @@ nd_w = N0/(r_w*1e-4*np.sqrt(2.0*np.pi)*np.log(sig)) * np.exp(-(np.log(r_w/r_med)
 
 a[:] = a[:] * 1e4 # Convert back to um
 
-fig = plt.figure
+fig = plt.figure()
 
 plt.plot(a,nd,lw=2,c='grey')
 
 plt.vlines(r_mode,0,nd_mode,colors='darkred',lw=2,label='Mode',ls='dashed')
+plt.vlines(r_med,0,nd_med,colors='darkblue',lw=2,label='Median',ls='dashed')
 plt.vlines(r_mean,0,nd_mean,colors='darkgreen',lw=2,label='Mean',ls='dashed')
 plt.vlines(r_eff,0,nd_eff,colors='darkmagenta',lw=2,label='Eff.',ls='dashed')
 plt.vlines(r_v,0,nd_v,colors='darkcyan',lw=2,label='Vol.',ls='dashed')
@@ -63,6 +65,25 @@ plt.vlines(r_w,0,nd_w,colors='goldenrod',lw=2,label='Char.',ls='dashed')
 
 plt.xlabel('Particle size [$\mu$m]')
 plt.ylabel('Size distribution [cm$^{-3}$ cm$^{-1}$]')
+
+plt.legend()
+
+plt.xscale('log')
+plt.yscale('log')
+
+fig = plt.figure()
+
+plt.plot(a,nd*a*1e-4,lw=2,c='grey')
+
+plt.vlines(r_mode,0,nd_mode*r_mode*1e-4,colors='darkred',lw=2,label='Mode',ls='dashed')
+plt.vlines(r_med,0,nd_med*r_med*1e-4,colors='darkblue',lw=2,label='Median',ls='dashed')
+plt.vlines(r_mean,0,nd_mean*r_mean*1e-4,colors='darkgreen',lw=2,label='Mean',ls='dashed')
+plt.vlines(r_eff,0,nd_eff*r_eff*1e-4,colors='darkmagenta',lw=2,label='Eff.',ls='dashed')
+plt.vlines(r_v,0,nd_v*r_v*1e-4,colors='darkcyan',lw=2,label='Vol.',ls='dashed')
+plt.vlines(r_w,0,nd_w*r_w*1e-4,colors='goldenrod',lw=2,label='Char.',ls='dashed')
+
+plt.xlabel('Particle size [$\mu$m]')
+plt.ylabel('Non-spectral size distribution [cm$^{-3}$]')
 
 plt.legend()
 

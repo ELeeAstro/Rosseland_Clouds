@@ -28,8 +28,8 @@ for i in range(nwl):
 na = 51
 
 # min and max radius [um]
-amin = 1e-2
-amax = 20.0
+amin = 1e-3
+amax = 100.0
 
 # size grid (logspaced recommended)
 a = np.logspace(np.log10(amin),np.log10(amax),na)

@@ -8,6 +8,8 @@
  An overleaf (in progess) [theory guide](https://www.overleaf.com/read/mggfpbbmpqpk#2fbd7d).
  This details what is actually going on in the code, and the theory behind the calculations etc.
 
+ Typically, you want Rosseland mean calculations when using band averaged values and spectral when the wavelength dependence is important (e.g. corr-k models).
+
  ## How to use
 
  The Gen_input.py file will generate the input files wavelengths.txt and RTtable.txt - the wavelengths, radii and temperatures of the calculations are contained here.

@@ -7,7 +7,7 @@
   ! 4 = Spectral with single particle size
   ! 5 = Spectral with lognormal size distributions
   ! 6 = Spectral with lognormal reff size (similar to single size)
-  meth = 5
+  meth = 6
 
   ! Wavelength file path
   wl_path = 'wavelengths.txt'

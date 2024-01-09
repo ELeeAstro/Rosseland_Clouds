@@ -1,11 +1,11 @@
 # Rosseland_Clouds
- Rosseland mean calculator for exoplanet cloud species
+ Rosseland and Planck mean calculator for exoplanet cloud species
 
  Warning: This code is under active development and undergoing a refresh of an older code for easier use. The README is not complete!
 
  ## Theory guide
 
- An overleaf (in progess) [theory guide](https://www.overleaf.com/read/mggfpbbmpqpk#2fbd7d).
+ An overleaf (in progress) [theory guide](https://www.overleaf.com/read/mggfpbbmpqpk#2fbd7d).
  This details what is actually going on in the code, and the theory behind the calculations etc.
 
  Typically, you want Rosseland mean calculations when using band averaged values and spectral when the wavelength dependence is important (e.g. corr-k models).
@@ -23,7 +23,7 @@
 
  ### 1. Rosseland mean with single particle size
 
- This takes the particle size array in RTtable as a single particle size (delta function), and calculates the Rosseland mean normalised opacity, single scattering albedo and asymmetry factor.
+ This takes the particle size array in RTtable as a single particle size (delta function), and calculates the Rosseland mean normalised cross section, single scattering albedo and asymmetry factor.
 
  ### 2. Rosseland mean with log-normal size distribution
 
@@ -33,7 +33,7 @@
  ### 3. Rosseland mean with log-normal reff size (similar to single sizes)
 
  This takes the particle size array in RTtable as the median particle size of a log-normal distribution, then calculates the effective particle size given the sigma value in the namelist.
- Then it calculates the Rosseland mean normalised opacity, single scattering albedo and asymmetry factor similar to the single particle size case.
+ Then it calculates the Rosseland mean normalised cross-section, single scattering albedo and asymmetry factor similar to the single particle size case.
 
  ### 4. Spectral with single particle size
 
@@ -52,6 +52,20 @@
  This takes the effective particle size of the log-normal parameters as a single particle size.
  It then calculates the normalised kext, a and g at those specific wavelengths at the effective particle size. 
  This mode is useful for building tables for spectral RT models in the GCM.
+
+ ### 7. Planck mean with single particle size
+
+ This takes the particle size array in RTtable as a single particle size (delta function), and calculates the Planck mean normalised cross-section, single scattering albedo and asymmetry factor.
+
+ ### 8. Planck mean with log-normal size distribution
+
+ This takes the particle size array in RTtable as the median particle size of a log-normal distribution, it then calculates the log-normal weighted (normalised typically, so N0 = 1) wavelength dependent values (integrating for iint values between rmin and rmax). 
+ Then the Planck mean values are calculated across each wavelength.
+
+ ### 9. Planck mean with log-normal reff size (similar to single sizes)
+
+ This takes the particle size array in RTtable as the median particle size of a log-normal distribution, then calculates the effective particle size given the sigma value in the namelist.
+ Then it calculates the Planck mean normalised cross-section, single scattering albedo and asymmetry factor similar to the single particle size case.
 
  ## Output
 

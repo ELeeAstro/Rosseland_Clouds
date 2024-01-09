@@ -40,6 +40,9 @@ Rosseland_reff.o \
 Spectral_single.o \
 Spectral_lognorm.o \
 Spectral_reff.o \
+Planck_single.o \
+Planck_lognorm.o \
+Planck_reff.o \
 Rosseland_main.o
 
 # executable statement

@@ -7,7 +7,11 @@
   ! 4 = Spectral with single particle size
   ! 5 = Spectral with lognormal size distributions
   ! 6 = Spectral with lognormal reff size (similar to single size)
-  meth = 6
+  ! 7 = Planck mean with single particle size
+  ! 8 = Planck mean with lognormal size distributions
+  ! 9 = Planck mean with lognormal reff size (similar to single size)
+
+  meth = 1
 
   ! Wavelength file path
   wl_path = 'wavelengths.txt'

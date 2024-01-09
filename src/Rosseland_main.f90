@@ -42,6 +42,12 @@ program Rosseland_main
     call Spectral_lognorm(sp, N0, r_med, sigma, rmin, rmax, iint)       
   case(6)
     call Spectral_reff(sp, r_med, sigma)
+  case(7)
+    call Planck_single(sp)
+  case(8)
+    call Planck_lognorm(sp, N0, sigma, rmin, rmax, iint)
+  case(9)
+    call Planck_reff(sp, sigma) 
   case default
     print*, 'Invalid method integer selected', meth
   end select

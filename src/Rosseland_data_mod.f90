@@ -20,6 +20,42 @@ module Rosseland_data_mod
 
 contains
 
+
+  subroutine Planck_mean(nwl, wl, temp, Vl, Vr)
+    implicit none
+
+    integer, intent(in) :: nwl
+    real(dp), dimension(nwl), intent(in) :: wl, Vl
+    real(dp), intent(in) :: temp
+
+    real(dp), intent(out) :: Vr
+
+    integer :: l
+    real(dp) :: top, bot, left, right, xx
+    real(dp), dimension(nwl) :: B, wl_cm
+
+    !! Subroutine calculates the Planck mean weighted value
+    !! Returns Planck mean to all array values
+    do l = 1, nwl
+
+      wl_cm(l) = wl(l) * 1e-4_dp
+
+      left = (2.0_dp * hp * c_s**2)/wl_cm(l)**5
+      xx = (hp * c_s) / (wl_cm(l) * kb * temp)
+      xx = min(xx, 35.0_dp) ! Avoid overfloating
+      right = 1.0_dp/(exp(xx) - 1.0_dp)
+
+      B(l) = left * right
+
+    end do
+
+    top = trapz(wl_cm(:),(Vl(:)*B(:)))
+    bot = trapz(wl_cm(:),B(:))
+
+    Vr = top/bot
+
+  end subroutine Planck_mean
+
   subroutine Ross_mean(nwl, wl, temp, Vl, Vr)
     implicit none
 
